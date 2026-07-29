@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEO Scoreboard — les entreprises B2B que l'IA cite au Québec — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/instruments/geo-scoreboard.html">
+<meta name="description" content="Quelles entreprises B2B les modèles d'IA citent-ils par secteur à Montréal et Québec — et lesquelles disparaissent en français ? Tableau de bord GEO, mis à jour par mesure trimestrielle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lp.css">
+</head>
+<body>
+<script>document.body.dataset.theme=(function(){try{var s=localStorage.getItem('lp-theme');if(s)return s;}catch(e){}var h=new Date().getHours();return(h>=7&&h<19)?'light':'dark';})();</script>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html">Articles</a>
+    <a href="/enquetes.html">Enquêtes</a>
+    <a href="/instruments.html" class="active">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="breadcrumb"><a href="/instruments.html">Instruments</a> · GEO Scoreboard</div>
+  <div class="sec-label">Instrument · pièce maîtresse</div>
+  <h1 class="page-title">Qui l'IA recommande-t-elle en B2B au Québec&nbsp;?</h1>
+  <p class="page-intro"><b>44 % des acheteurs commencent leur recherche dans un modèle d'IA (Bain).</b> On pose aux principaux LLM les questions d'un acheteur, par secteur, à Montréal et à Québec — et on publie qui est cité, avec quelles sources. Plus le grand angle mort&nbsp;: le français.</p>
+</div>
+
+<section>
+  <div class="note warn reveal">
+    <b>Aperçu — données de démonstration.</b> Le tableau ci-dessous illustre le format. Les noms réels d'entreprises publiques n'apparaîtront qu'après la <b>première mesure datée</b> (voir méthodologie) — aucun classement n'est inventé ici.
+  </div>
+
+  <div class="reveal" style="margin-top:26px">
+    <div class="seg" data-group="secteur" style="margin-bottom:18px">
+      <button data-v="saas" class="on">SaaS B2B</button>
+      <button data-v="manuf">Manufacturier B2B</button>
+      <button data-v="agences">Agences marketing</button>
+    </div>
+    <div class="seg" data-group="ville" style="margin-bottom:24px">
+      <button data-v="mtl" class="on">Grand Montréal</button>
+      <button data-v="qc">Ville de Québec</button>
+    </div>
+
+    <div class="wrap-x">
+      <table class="board">
+        <thead>
+          <tr><th>#</th><th>Entreprise (démo)</th><th>Score de citation</th><th>Cité en anglais</th><th>Cité en français</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <span class="badge green">écart FR/EN faible</span>
+      <span class="badge hot">disparaît en français</span>
+      <span style="font-family:var(--mono);font-size:.68rem;color:var(--dim)">snapshot : démonstration · non daté</span>
+    </div>
+  </div>
+
+  <div class="result reveal" style="margin-top:40px">
+    <div class="lbl">Écart de citation bilingue moyen (démo)</div>
+    <div class="big">—38<span> %</span></div>
+    <div class="sub">de citations en moins lorsqu'on demande en français plutôt qu'en anglais</div>
+  </div>
+
+  <div class="subtitle">Méthodologie</div>
+  <div class="method reveal">
+    <h3>Comment le tableau sera peuplé</h3>
+    <ul>
+      <li><b>Questions d'acheteur :</b> un jeu fixe de requêtes par secteur (« meilleures entreprises de [secteur] à [ville] », « fournisseurs [secteur] recommandés au Québec »), posées en anglais et en français.</li>
+      <li><b>Modèles interrogés :</b> plusieurs LLM grand public, à date fixe, chaque trimestre.</li>
+      <li><b>Score de citation :</b> fréquence d'apparition d'une entreprise dans les réponses, pondérée par la position et la présence d'une source.</li>
+      <li><b>Écart bilingue :</b> différence de citations entre la version anglaise et française de la même question.</li>
+      <li><b>Transparence :</b> chaque snapshot est daté&nbsp;; seules des entreprises publiquement identifiables sont listées&nbsp;; la méthode complète est publiée.</li>
+    </ul>
+    <p style="margin-top:12px">Techniquement, la mesure tourne par lots via une fonction serverless&nbsp;; le tableau reste un fichier statique publié — pas de requête en direct côté visiteur.</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script src="/assets/lp.js"></script>
+<script>
+(function(){
+  var demo={
+    saas:{mtl:[['A',92,true,true],['B',81,true,true],['C',74,true,false],['D',63,true,false],['E',55,true,true],['F',48,true,false]],
+          qc:[['A',88,true,true],['B',70,true,false],['C',61,true,true],['D',52,true,false],['E',44,true,false]]},
+    manuf:{mtl:[['A',79,true,false],['B',68,true,false],['C',60,true,true],['D',51,true,false],['E',40,true,false]],
+           qc:[['A',72,true,true],['B',59,true,false],['C',48,true,false],['D',37,true,false]]},
+    agences:{mtl:[['A',85,true,true],['B',72,true,true],['C',64,true,false],['D',55,true,true],['E',47,true,false]],
+             qc:[['A',77,true,true],['B',63,true,true],['C',50,true,false],['D',39,true,false]]}
+  };
+  var state={secteur:'saas',ville:'mtl'};
+  function render(){
+    var data=demo[state.secteur][state.ville];
+    var html='';
+    data.forEach(function(r,i){
+      var fr=r[3]?'<span class="gap-yes">oui</span>':'<span class="gap-no">non</span>';
+      html+='<tr><td class="rank">'+(i+1)+'</td><td class="co">Entreprise '+r[0]+'</td>'
+        +'<td style="font-family:var(--mono)">'+r[1]+'</td>'
+        +'<td class="gap-yes" style="font-family:var(--mono)">oui</td>'
+        +'<td>'+fr+'</td></tr>';
+    });
+    document.getElementById('rows').innerHTML=html;
+  }
+  document.querySelectorAll('.seg').forEach(function(seg){
+    var g=seg.dataset.group;
+    seg.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');state[g]=b.dataset.v;render();
+      });
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Êtes-vous citable par ChatGPT ? — le test GEO — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/instruments/citable.html">
+<meta name="description" content="Vos prochains clients vous cherchent dans un modèle d'IA. Testez si votre entreprise est citable comme source, et obtenez des pistes concrètes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lp.css">
+</head>
+<body>
+<script>document.body.dataset.theme=(function(){try{var s=localStorage.getItem('lp-theme');if(s)return s;}catch(e){}var h=new Date().getHours();return(h>=7&&h<19)?'light':'dark';})();</script>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html">Articles</a>
+    <a href="/enquetes.html">Enquêtes</a>
+    <a href="/instruments.html" class="active">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="breadcrumb"><a href="/instruments.html">Instruments</a> · test citable</div>
+  <div class="sec-label">Instrument · GEO</div>
+  <h1 class="page-title">Vos clients vous cherchent dans l'IA. Êtes-vous citable&nbsp;?</h1>
+  <p class="page-intro"><b>89 % des réponses sans marque citent des sources tierces (Bain).</b> La question n'est plus « êtes-vous premier sur Google », mais « le modèle peut-il vous citer comme source ». Testez votre entreprise.</p>
+</div>
+
+<section>
+  <div class="two-col">
+    <div class="reveal">
+      <div class="field"><label>Entreprise ou domaine</label><input type="text" id="co" placeholder="votre-entreprise.ca"></div>
+      <div class="field"><label>Secteur</label><input type="text" id="sec" placeholder="ex. logiciel B2B, fabrication"></div>
+      <div class="field"><label>Marché</label>
+        <div class="seg" data-group="ville"><button data-v="Grand Montréal" class="on">Grand Montréal</button><button data-v="Québec">Ville de Québec</button><button data-v="Canada">Canada</button></div>
+      </div>
+      <button class="btn btn-hot" id="run" style="margin-top:8px">Tester ma citabilité</button>
+      <div class="note" id="mode" style="margin-top:20px"></div>
+    </div>
+
+    <div class="reveal">
+      <div class="result">
+        <div class="lbl">Indice de citabilité</div>
+        <div class="big" id="score">—</div>
+        <div class="sub" id="verdict">en attente de test</div>
+      </div>
+      <div id="pistes" style="margin-top:22px"></div>
+    </div>
+  </div>
+
+  <div class="subtitle">Comment ça marche</div>
+  <div class="method reveal">
+    <h3>Mesure réelle vs mode démo</h3>
+    <p>La <b>mesure réelle</b> interroge un modèle d'IA (fonction serverless <code>/api/geo-check</code>) avec des questions d'acheteur pour votre secteur et votre marché, puis évalue si votre entreprise est citée et avec quelle source. Sans clé d'API, l'outil tourne en <b>mode démonstration</b> — résultat illustratif clairement identifié.</p>
+    <ul>
+      <li>Modèle : Claude (Anthropic) — gabarit <code>/api/geo-check.js</code>.</li>
+      <li>Variable requise : <code>ANTHROPIC_API_KEY</code> dans Vercel.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script src="/assets/lp.js"></script>
+<script>
+(function(){
+  var USE_API=false;
+  var state={ville:'Grand Montréal'};
+  document.querySelectorAll('.seg[data-group=ville] button').forEach(function(b){
+    b.addEventListener('click',function(){
+      b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');state.ville=b.dataset.v;
+    });
+  });
+  document.getElementById('mode').innerHTML='<b>Mode démonstration.</b> Résultat illustratif — la mesure réelle s\'active avec la clé d\'API (voir plus bas).';
+
+  var pistesAll=[
+    'Publier des pages « sources » : données chiffrées, méthodologie, dates.',
+    'Structurer le contenu (titres clairs, FAQ, données citables).',
+    'Ajouter des données JSON-LD (Organization, Article) sur chaque page.',
+    'Obtenir des mentions par des tiers crédibles du secteur.',
+    'Offrir une version française de qualité équivalente.',
+    'Nommer explicitement votre ville et votre secteur dans le contenu.'
+  ];
+  function hash(s){var h=0;for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h;}
+
+  function demo(co,sec){
+    var h=hash((co||'x')+'|'+(sec||'y')+'|'+state.ville);
+    var score=28+h%60; // 28–87
+    var n=score>=70?2:score>=45?3:4;
+    var start=h%pistesAll.length,list=[];
+    for(var i=0;i<n;i++){list.push(pistesAll[(start+i)%pistesAll.length]);}
+    return {score:score,pistes:list};
+  }
+
+  function show(r){
+    document.getElementById('score').innerHTML=r.score+'<span> / 100</span>';
+    var v=document.getElementById('verdict');
+    if(r.score>=70){v.textContent='citable — bien positionné';}
+    else if(r.score>=45){v.textContent='partiellement citable';}
+    else{v.textContent='peu citable — angle mort GEO';}
+    var html='<div style="font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:12px">Pistes concrètes</div>';
+    r.pistes.forEach(function(p){
+      html+='<div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;font-size:.86rem"><span class="badge blue">piste</span><span style="color:var(--dim)">'+p+'</span></div>';
+    });
+    document.getElementById('pistes').innerHTML=html;
+  }
+
+  document.getElementById('run').addEventListener('click',function(){
+    var co=document.getElementById('co').value.trim();
+    var sec=document.getElementById('sec').value.trim();
+    if(!USE_API){show(demo(co,sec));return;}
+    var btn=this;btn.textContent='Test…';
+    fetch('/api/geo-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'citable',entreprise:co,secteur:sec,marche:state.ville})})
+      .then(function(r){return r.json();}).then(function(d){show(d);btn.textContent='Tester ma citabilité';})
+      .catch(function(){show(demo(co,sec));btn.textContent='Tester ma citabilité';});
+  });
+})();
+</script>
+</body>
+</html>

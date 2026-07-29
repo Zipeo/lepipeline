@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/articles.html">
+<meta name="description" content="Tous les cas, analyses, enquêtes et instruments du Pipeline. Marketing B2B et IA appliquée, écrit depuis Québec par Carlos Alarcón.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body[data-theme="dark"]{--bg:#0B0B10;--bg-2:#12121A;--fg:#F2EFE9;--dim:#8B8B95;--fg-rgb:242,239,233;--glass:rgba(11,11,16,.72);--card:#12121A;--shadow:rgba(0,0,0,.5)}
+  body[data-theme="light"]{--bg:#F7F4EE;--bg-2:#EDE9DF;--fg:#161612;--dim:#6d6d64;--fg-rgb:22,22,18;--glass:rgba(247,244,238,.78);--card:#FFFFFF;--shadow:rgba(20,20,16,.16)}
+  :root{--blue:#4D7CFE;--hot:#FF4D2E;--mono:'JetBrains Mono',ui-monospace,monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .6s ease,color .6s ease}
+  ::selection{background:var(--hot);color:#fff}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--hot);pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:difference}
+  .cursor.big{width:64px;height:64px;background:#fff}
+  @media(hover:none){.cursor{display:none}}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 34px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid rgba(var(--fg-rgb),.1);transition:background .6s}
+  .topbar .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem}
+  .topbar .brand a{color:var(--fg);text-decoration:none}
+  .topbar nav{display:flex;gap:26px;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+  .topbar nav a{color:var(--dim);text-decoration:none;transition:color .2s}
+  .topbar nav a:hover,.topbar nav a.active{color:var(--fg)}
+  .topbar nav a.active{border-bottom:2px solid var(--hot);padding-bottom:3px}
+  .top-right{display:flex;align-items:center;gap:12px}
+  .lang{font-family:var(--mono);font-size:.72rem;border:1px solid rgba(var(--fg-rgb),.35);padding:4px 12px;border-radius:99px}
+  .lang b{color:var(--blue)}
+  .theme-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(var(--fg-rgb),.35);background:transparent;color:var(--fg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:transform .3s,border-color .2s}
+  .theme-btn:hover{transform:rotate(24deg);border-color:var(--fg)}
+  .theme-float{position:fixed;bottom:26px;right:26px;z-index:60;width:52px;height:52px;font-size:1.3rem;background:var(--card);box-shadow:0 8px 30px var(--shadow)}
+  @media(max-width:720px){.topbar nav{display:none}}
+
+  .page-head{padding:150px 6vw 40px;max-width:1000px}
+  .sec-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hot);margin-bottom:16px}
+  h1.page-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,5vw,4rem);line-height:1.04;letter-spacing:-.015em;max-width:900px}
+  .page-intro{color:var(--dim);font-size:1.05rem;max-width:560px;margin-top:22px}
+  .page-intro b{color:var(--fg)}
+
+  .filters{display:flex;flex-wrap:wrap;gap:10px;padding:24px 6vw 0}
+  .fchip{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(var(--fg-rgb),.24);border-radius:99px;padding:8px 16px;color:var(--dim);background:transparent;cursor:pointer;transition:all .2s}
+  .fchip:hover{border-color:var(--fg);color:var(--fg)}
+  .fchip.on{background:var(--hot);border-color:var(--hot);color:#fff}
+
+  section{padding:40px 6vw 90px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--card);border:1px solid rgba(var(--fg-rgb),.1);border-radius:18px;padding:30px;text-decoration:none;color:var(--fg);overflow:hidden;transition:transform .3s cubic-bezier(.2,.6,.2,1),border-color .3s,background .6s,opacity .4s;display:flex;flex-direction:column;min-height:320px}
+  .card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0%,rgba(77,124,254,.14),transparent 60%);opacity:0;transition:opacity .3s}
+  .card:hover{transform:translateY(-8px);border-color:rgba(77,124,254,.45)}
+  .card:hover::before{opacity:1}
+  .card.soon{opacity:.62}
+  .card.soon:hover{opacity:.85}
+  .card.hidden{display:none}
+  .card-meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;display:flex;gap:14px;flex-wrap:wrap}
+  .card-meta .tag-soon{color:var(--dim)}
+  .card h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;line-height:1.22;margin-bottom:12px}
+  .card p{font-size:.88rem;color:var(--dim);flex:1}
+  .card-metric{margin-top:20px;font-family:var(--mono);font-size:.72rem;border-top:1px dashed rgba(var(--fg-rgb),.22);padding-top:14px;color:var(--dim)}
+  .card-metric b{color:var(--hot)}
+  .card .arrow{position:absolute;top:26px;right:26px;font-size:1.2rem;color:var(--dim);transition:transform .3s,color .3s}
+  .card:hover .arrow{transform:translate(4px,-4px);color:var(--fg)}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  footer{border-top:1px solid rgba(var(--fg-rgb),.12);padding:44px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:.8rem;color:var(--dim)}
+  footer .fbrand{font-family:'Fraunces',serif;font-weight:900;color:var(--fg);font-size:1rem}
+  footer a{color:var(--blue);text-decoration:none;margin-left:22px}
+  footer .mono{font-family:var(--mono);font-size:.66rem}
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html" class="active">Articles</a>
+    <a href="/enquetes.html">Enquêtes</a>
+    <a href="/instruments.html">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" id="themeBtnTop" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" id="themeBtn" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="sec-label">Articles</div>
+  <h1 class="page-title">Tous les cas, avec les chiffres qui vont avec.</h1>
+  <p class="page-intro"><b>Rien de recyclé.</b> Chaque pièce part d'une donnée publique vérifiable ou d'une expérience menée sur Le Pipeline lui-même. Les sources sont citées, toujours.</p>
+</div>
+
+<div class="filters" id="filters">
+  <button class="fchip on" data-cat="all">Tout</button>
+  <button class="fchip" data-cat="analyse">Analyses</button>
+  <button class="fchip" data-cat="enquete">Enquêtes</button>
+  <button class="fchip" data-cat="instrument">Instruments</button>
+  <button class="fchip" data-cat="note">Notes</button>
+</div>
+
+<section>
+  <div class="grid" id="grid">
+
+    <a class="card reveal" href="/articles/965-milliards.html" data-cat="analyse">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>IA APPLIQUÉE</span><span>ANALYSE</span><span>6 MIN</span></div>
+      <h4>965 milliards de dollars. Et rien à vendre que votre équipe marketing utilise... pour l'instant.</h4>
+      <p>Lecture du classement des licornes avec les yeux d'un marketeur B2B — bulles interactives incluses.</p>
+      <div class="card-metric">DONNÉE CLÉ : l'IA pèse <b>~60 %</b> de la valeur du top 30</div>
+    </a>
+
+    <a class="card reveal soon" href="/enquetes.html" data-cat="enquete">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>ENQUÊTE</span><span class="tag-soon">À VENIR</span></div>
+      <h4>Le marché du marketing B2B à Québec, raconté par les données.</h4>
+      <p>Plein emploi... et perspectives « très limitées ». Un récit défilant croisant 14 sources primaires.</p>
+      <div class="card-metric">DONNÉE CLÉ : chômage RMR Québec <b>3,0 %</b> · jan. 2026</div>
+    </a>
+
+    <a class="card reveal soon" href="/instruments.html" data-cat="instrument">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>INSTRUMENT</span><span class="tag-soon">À VENIR</span></div>
+      <h4>Vos prochains clients vous cherchent dans ChatGPT. Votre site est-il citable&nbsp;?</h4>
+      <p>Le test GEO en 10 questions pour les PME québécoises : devenir la source que les modèles d'IA citent.</p>
+      <div class="card-metric">DONNÉE CLÉ : <b>89 %</b> des réponses citent des tiers (Bain)</div>
+    </a>
+
+    <a class="card reveal soon" href="#" data-cat="analyse">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>DONNÉES</span><span>ANALYSE</span><span class="tag-soon">À VENIR</span></div>
+      <h4>16 % → 36 %&nbsp;: ce que Gartner ne dit pas sur l'automatisation du marketing.</h4>
+      <p>La courbe d'adoption lue à froid. Où va vraiment le budget, et pourquoi la moyenne cache deux marchés.</p>
+      <div class="card-metric">DONNÉE CLÉ : automatisation <b>16 → 36 %</b> d'ici 2028 (Gartner)</div>
+    </a>
+
+    <a class="card reveal soon" href="#" data-cat="note">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>NOTE</span><span class="tag-soon">À VENIR</span></div>
+      <h4>« Rep-free »&nbsp;: 67&nbsp;% des acheteurs B2B veulent conclure sans vous parler.</h4>
+      <p>Note courte. Un chiffre, une conséquence concrète pour une équipe marketing de PME, et rien de plus.</p>
+      <div class="card-metric">DONNÉE CLÉ : <b>67 %</b> préfèrent l'achat sans représentant (Gartner)</div>
+    </a>
+
+    <a class="card reveal soon" href="/instruments.html" data-cat="instrument">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>INSTRUMENT</span><span class="tag-soon">EN LIGNE</span></div>
+      <h4>Le calculateur de pipeline.</h4>
+      <p>Quatre curseurs — leads, conversion, valeur d'entente, closing — et votre pipeline annuel projeté, en direct.</p>
+      <div class="card-metric">OUTIL : projection <b>revenus signés / an</b></div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script>
+/* thème jour/nuit — auto selon l'heure + mémoire du choix */
+(function(){
+  const saved = localStorage.getItem('lp-theme');
+  const h = new Date().getHours();
+  const auto = (h>=7 && h<19) ? 'light' : 'dark';
+  document.body.dataset.theme = saved || auto;
+  function sync(){document.querySelectorAll('.theme-btn').forEach(b=>b.textContent=document.body.dataset.theme==='dark'?'☀':'☾')}
+  sync();
+  document.querySelectorAll('.theme-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    const next=document.body.dataset.theme==='dark'?'light':'dark';
+    document.body.dataset.theme=next;localStorage.setItem('lp-theme',next);sync();
+  }));
+})();
+/* curseur custom */
+(function(){
+  const c=document.getElementById('cursor');if(!c)return;
+  addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px'});
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>c.classList.add('big'));
+    el.addEventListener('mouseleave',()=>c.classList.remove('big'));
+  });
+})();
+/* révélation au scroll */
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+/* filtres */
+(function(){
+  const chips=document.querySelectorAll('.fchip'),cards=document.querySelectorAll('#grid .card');
+  chips.forEach(ch=>ch.addEventListener('click',()=>{
+    chips.forEach(c=>c.classList.remove('on'));ch.classList.add('on');
+    const cat=ch.dataset.cat;
+    cards.forEach(card=>card.classList.toggle('hidden',cat!=='all'&&card.dataset.cat!==cat));
+  }));
+})();
+</script>
+</body>
+</html>

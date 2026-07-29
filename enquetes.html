@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquêtes — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/enquetes.html">
+<meta name="description" content="Les enquêtes du Pipeline : récits de données défilants, croisant des sources primaires sur le marketing B2B et l'IA à Québec.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body[data-theme="dark"]{--bg:#0B0B10;--bg-2:#12121A;--fg:#F2EFE9;--dim:#8B8B95;--fg-rgb:242,239,233;--glass:rgba(11,11,16,.72);--card:#12121A;--shadow:rgba(0,0,0,.5)}
+  body[data-theme="light"]{--bg:#F7F4EE;--bg-2:#EDE9DF;--fg:#161612;--dim:#6d6d64;--fg-rgb:22,22,18;--glass:rgba(247,244,238,.78);--card:#FFFFFF;--shadow:rgba(20,20,16,.16)}
+  :root{--blue:#4D7CFE;--hot:#FF4D2E;--mono:'JetBrains Mono',ui-monospace,monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .6s ease,color .6s ease}
+  ::selection{background:var(--hot);color:#fff}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--hot);pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:difference}
+  .cursor.big{width:64px;height:64px;background:#fff}
+  @media(hover:none){.cursor{display:none}}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 34px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid rgba(var(--fg-rgb),.1);transition:background .6s}
+  .topbar .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem}
+  .topbar .brand a{color:var(--fg);text-decoration:none}
+  .topbar nav{display:flex;gap:26px;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+  .topbar nav a{color:var(--dim);text-decoration:none;transition:color .2s}
+  .topbar nav a:hover,.topbar nav a.active{color:var(--fg)}
+  .topbar nav a.active{border-bottom:2px solid var(--hot);padding-bottom:3px}
+  .top-right{display:flex;align-items:center;gap:12px}
+  .lang{font-family:var(--mono);font-size:.72rem;border:1px solid rgba(var(--fg-rgb),.35);padding:4px 12px;border-radius:99px}
+  .lang b{color:var(--blue)}
+  .theme-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(var(--fg-rgb),.35);background:transparent;color:var(--fg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:transform .3s,border-color .2s}
+  .theme-btn:hover{transform:rotate(24deg);border-color:var(--fg)}
+  .theme-float{position:fixed;bottom:26px;right:26px;z-index:60;width:52px;height:52px;font-size:1.3rem;background:var(--card);box-shadow:0 8px 30px var(--shadow)}
+  @media(max-width:720px){.topbar nav{display:none}}
+
+  .page-head{padding:150px 6vw 30px;max-width:1000px}
+  .sec-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hot);margin-bottom:16px}
+  h1.page-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,5vw,4rem);line-height:1.04;letter-spacing:-.015em;max-width:900px}
+  .page-intro{color:var(--dim);font-size:1.05rem;max-width:600px;margin-top:22px}
+  .page-intro b{color:var(--fg)}
+
+  section{padding:40px 6vw 60px}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* enquête vedette */
+  .feature{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid rgba(var(--fg-rgb),.12);border-radius:24px;overflow:hidden;background:var(--card);text-decoration:none;color:var(--fg);transition:transform .35s cubic-bezier(.2,.6,.2,1),border-color .3s}
+  .feature:hover{transform:translateY(-6px);border-color:rgba(255,77,46,.45)}
+  @media(max-width:900px){.feature{grid-template-columns:1fr}}
+  .feature-txt{padding:48px 52px}
+  .feature-meta{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hot);display:flex;gap:16px;margin-bottom:22px}
+  .feature h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.1;margin-bottom:18px}
+  .feature p{color:var(--dim);max-width:440px}
+  .feature .kpis{display:flex;gap:28px;margin-top:30px;flex-wrap:wrap}
+  .kpi .n{font-family:'Fraunces',serif;font-weight:900;font-size:1.9rem}
+  .kpi .n span{color:var(--hot)}
+  .kpi .l{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .feature-viz{position:relative;background:linear-gradient(150deg,#12121A,#1b1b28);display:flex;align-items:center;justify-content:center;min-height:340px;overflow:hidden}
+  body[data-theme="light"] .feature-viz{background:linear-gradient(150deg,#efe9dc,#f7f1e6)}
+  .feature-viz svg{width:100%;height:100%}
+  .badge-scrolly{position:absolute;top:20px;left:20px;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(255,77,46,.9);padding:6px 12px;border-radius:99px}
+
+  .subtitle{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:70px 0 26px;border-top:1px solid rgba(var(--fg-rgb),.12);padding-top:34px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--card);border:1px solid rgba(var(--fg-rgb),.1);border-radius:18px;padding:30px;text-decoration:none;color:var(--fg);overflow:hidden;transition:transform .3s cubic-bezier(.2,.6,.2,1),border-color .3s,opacity .4s;display:flex;flex-direction:column;min-height:280px}
+  .card:hover{transform:translateY(-8px);border-color:rgba(77,124,254,.45)}
+  .card.soon{opacity:.6}.card.soon:hover{opacity:.85}
+  .card-meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;display:flex;gap:14px}
+  .card-meta .tag-soon{color:var(--dim)}
+  .card h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;line-height:1.22;margin-bottom:12px}
+  .card p{font-size:.88rem;color:var(--dim);flex:1}
+  .card-metric{margin-top:20px;font-family:var(--mono);font-size:.72rem;border-top:1px dashed rgba(var(--fg-rgb),.22);padding-top:14px;color:var(--dim)}
+  .card-metric b{color:var(--hot)}
+  .card .arrow{position:absolute;top:26px;right:26px;font-size:1.2rem;color:var(--dim)}
+
+  footer{border-top:1px solid rgba(var(--fg-rgb),.12);padding:44px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:.8rem;color:var(--dim)}
+  footer .fbrand{font-family:'Fraunces',serif;font-weight:900;color:var(--fg);font-size:1rem}
+  footer a{color:var(--blue);text-decoration:none;margin-left:22px}
+  footer .mono{font-family:var(--mono);font-size:.66rem}
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html">Articles</a>
+    <a href="/enquetes.html" class="active">Enquêtes</a>
+    <a href="/instruments.html">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" id="themeBtnTop" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" id="themeBtn" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="sec-label">Enquêtes</div>
+  <h1 class="page-title">Des récits de données. Un chiffre à la fois.</h1>
+  <p class="page-intro"><b>Une enquête, ce n'est pas un article plus long.</b> C'est une question qu'on suit jusqu'au bout, en croisant des sources primaires, avec des graphiques qui se construisent pendant que vous défilez. Une par trimestre.</p>
+</div>
+
+<section>
+  <a class="feature reveal" href="#">
+    <div class="feature-txt">
+      <div class="feature-meta"><span>ENQUÊTE VEDETTE</span><span>SCROLLYTELLING</span><span>À VENIR</span></div>
+      <h2>Le marché du marketing B2B à Québec, raconté par les données.</h2>
+      <p>Plein emploi à 3,0 %... et des perspectives d'emploi jugées « très limitées » par le gouvernement. Comment les deux peuvent-ils être vrais&nbsp;? Un récit défilant qui croise 14 sources primaires.</p>
+      <div class="kpis">
+        <div class="kpi"><div class="n"><span>3,0</span>&nbsp;%</div><div class="l">Chômage RMR · jan. 2026</div></div>
+        <div class="kpi"><div class="n">14</div><div class="l">Sources primaires</div></div>
+        <div class="kpi"><div class="n"><span>44</span>&nbsp;%</div><div class="l">Achats démarrés en LLM</div></div>
+      </div>
+    </div>
+    <div class="feature-viz">
+      <span class="badge-scrolly">◇ défilez pour explorer</span>
+      <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" stroke="rgba(77,124,254,.35)" stroke-width="1">
+          <line x1="40" y1="40" x2="40" y2="290"/><line x1="40" y1="290" x2="370" y2="290"/>
+        </g>
+        <polyline points="40,250 100,235 160,205 220,150 280,120 360,70" fill="none" stroke="#4D7CFE" stroke-width="2.5"/>
+        <polyline points="40,270 100,268 160,255 220,258 280,240 360,236" fill="none" stroke="#FF4D2E" stroke-width="2.5"/>
+        <circle cx="360" cy="70" r="5" fill="#4D7CFE"/><circle cx="360" cy="236" r="5" fill="#FF4D2E"/>
+        <text x="52" y="60" fill="rgba(242,239,233,.5)" font-family="monospace" font-size="9">adoption IA ↗</text>
+        <text x="52" y="286" fill="rgba(242,239,233,.5)" font-family="monospace" font-size="9">postes ouverts →</text>
+      </svg>
+    </div>
+  </a>
+
+  <div class="subtitle">Prochaines enquêtes du calendrier éditorial</div>
+  <div class="grid">
+    <a class="card reveal soon" href="#">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>DONNÉES</span><span class="tag-soon">T3 2026</span></div>
+      <h4>Où va vraiment le budget marketing des PME&nbsp;?</h4>
+      <p>7,8 % du revenu en moyenne — mais la moyenne ment. Décomposition par taille et par secteur.</p>
+      <div class="card-metric">SOURCE : <b>CMO Spend Survey</b></div>
+    </a>
+    <a class="card reveal soon" href="#">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>IA</span><span class="tag-soon">T4 2026</span></div>
+      <h4>Les leaders IA croissent 6× plus vite. Vraiment&nbsp;?</h4>
+      <p>On ouvre l'étude Bain, on regarde la méthode, et on sépare le signal de la promesse.</p>
+      <div class="card-metric">SOURCE : <b>Bain &amp; Company</b></div>
+    </a>
+    <a class="card reveal soon" href="#">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>GEO</span><span class="tag-soon">2027</span></div>
+      <h4>Qui les LLM citent-ils quand on parle du Québec&nbsp;?</h4>
+      <p>Une expérience menée sur Le Pipeline lui-même : mesurer, mois après mois, ce que les modèles retiennent.</p>
+      <div class="card-metric">MÉTHODE : <b>expérience maison</b></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const saved=localStorage.getItem('lp-theme');const h=new Date().getHours();
+  document.body.dataset.theme=saved||((h>=7&&h<19)?'light':'dark');
+  function sync(){document.querySelectorAll('.theme-btn').forEach(b=>b.textContent=document.body.dataset.theme==='dark'?'☀':'☾')}
+  sync();
+  document.querySelectorAll('.theme-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    const n=document.body.dataset.theme==='dark'?'light':'dark';document.body.dataset.theme=n;localStorage.setItem('lp-theme',n);sync();
+  }));
+})();
+(function(){const c=document.getElementById('cursor');if(!c)return;
+  addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px'});
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>c.classList.add('big'));el.addEventListener('mouseleave',()=>c.classList.remove('big'))});
+})();
+(function(){const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el))})();
+</script>
+</body>
+</html>

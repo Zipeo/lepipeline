@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de salaire marketing B2B au Québec — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/instruments/salaire.html">
+<meta name="description" content="Estimez un salaire de marketing B2B au Québec selon le poste, la région, le secteur, la spécialité et les langues — bandes tirées de sources publiques (Job Bank, Robert Half, Glassdoor, IMT).">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Calculateur de salaire marketing B2B au Québec","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"},"inLanguage":"fr-CA","publisher":{"@type":"Person","name":"Carlos Alarcón"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lp.css">
+</head>
+<body>
+<script>document.body.dataset.theme=(function(){try{var s=localStorage.getItem('lp-theme');if(s)return s;}catch(e){}var h=new Date().getHours();return(h>=7&&h<19)?'light':'dark';})();</script>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html">Articles</a>
+    <a href="/enquetes.html">Enquêtes</a>
+    <a href="/instruments.html" class="active">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="breadcrumb"><a href="/instruments.html">Instruments</a> · nº 1</div>
+  <div class="sec-label">Instrument · salaires</div>
+  <h1 class="page-title">Combien vaut un profil marketing B2B au Québec&nbsp;?</h1>
+  <p class="page-intro"><b>Réglez le profil, lisez la fourchette.</b> Les bandes de base viennent de sources publiques&nbsp;; les primes de secteur, de spécialité et de langue sont documentées. Rien d'inventé — et là où la donnée manque, c'est dit.</p>
+</div>
+
+<section>
+  <div class="two-col">
+    <div class="reveal">
+      <div class="field">
+        <label>Poste</label>
+        <div class="seg" data-group="poste">
+          <button data-v="pro">Professionnel marketing</button>
+          <button data-v="dir" class="on">Gestionnaire / Directeur</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Cadre de référence <span style="font-family:var(--mono);font-size:.66rem;color:var(--dim)" id="srcNote"></span></label>
+        <div class="seg" data-group="region">
+          <button data-v="capnat" class="on">Capitale-Nationale</button>
+          <button data-v="qc">Grand Montréal / Québec</button>
+          <button data-v="ca">Canada</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Secteur</label>
+        <div class="seg" data-group="secteur">
+          <button data-v="gen" class="on">Généraliste</button>
+          <button data-v="b2b">B2B tech / SaaS</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Spécialité</label>
+        <div class="seg" data-group="spec">
+          <button data-v="none" class="on">Aucune</button>
+          <button data-v="dg">Demand gen · PMM · Growth</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Compétences IA / analytics avérées</label>
+        <div class="seg" data-group="ia">
+          <button data-v="no" class="on">Non</button>
+          <button data-v="yes">Oui</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Langues</label>
+        <div class="seg" data-group="langue">
+          <button data-v="fr" class="on">FR</button>
+          <button data-v="en">FR + EN</button>
+          <button data-v="es">FR + EN + ES</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="result">
+        <div class="lbl">Salaire annuel médian estimé</div>
+        <div class="big" id="med">—</div>
+        <div class="sub" id="range">—</div>
+      </div>
+      <div style="margin-top:22px" id="factors"></div>
+      <div class="note" id="src" style="margin-top:20px"></div>
+    </div>
+  </div>
+
+  <div class="subtitle">Méthodologie &amp; sources</div>
+  <div class="method reveal">
+    <h3>Comment le chiffre est construit</h3>
+    <p>On part d'une <b>bande de base</b> (bas / médian / haut) tirée d'une source publique, puis on applique des ajustements <b>documentés</b>. Les primes non chiffrées publiquement (IA, langues) sont signalées comme <b>facteurs qualitatifs</b> — jamais converties en un montant inventé.</p>
+    <ul>
+      <li><b>Bandes de base :</b> Job Bank — CNP 10022, Capitale-Nationale (2023-24, annualisé 2080 h)&nbsp;; Glassdoor 2025 — gestionnaire marketing, province de Québec&nbsp;; Robert Half 2026 — Marketing Manager, Canada&nbsp;; IMT en ligne — CNP 11202, Québec.</li>
+      <li><b>Prime secteur B2B tech / SaaS :</b> +15 % à 25 % (application de +20 % médian) — GTM North / Robert Half.</li>
+      <li><b>Spécialité demand gen / PMM / growth :</b> +10 000 $ à 20 000 $ — GTM North.</li>
+      <li><b>Compétences IA / analytics :</b> prime confirmée par 85 % des leaders marketing (Robert Half), <b>montant non publié</b> → facteur qualitatif.</li>
+      <li><b>Bilinguisme FR/EN et trilinguisme ES :</b> prime salariale documentée au Québec (contexte Loi 96), <b>montant non chiffré</b> → facteur qualitatif.</li>
+    </ul>
+    <p style="margin-top:14px"><b>Angle Montréal :</b> il n'existe pas de bande métropolitaine publique distincte pour le marketing B2B à Montréal. En attendant une source dédiée, le cadre « Grand Montréal / Québec » s'appuie sur la donnée provinciale (dominée par le Grand Montréal). À sourcer.</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script src="/assets/lp.js"></script>
+<script>
+(function(){
+  var nf=new Intl.NumberFormat('fr-CA');
+  var state={poste:'dir',region:'capnat',secteur:'gen',spec:'none',ia:'no',langue:'fr'};
+
+  var bands={
+    dir:{
+      capnat:{low:85000,med:111000,high:171000,src:'Job Bank — CNP 10022, Capitale-Nationale (annualisé 2080 h)'},
+      qc:{low:70000,med:90000,high:100000,src:'Glassdoor 2025 — gestionnaire marketing, province de Québec (base + variable)'},
+      ca:{low:86500,med:101250,high:111000,src:'Robert Half 2026 — Marketing Manager, Canada'}
+    },
+    pro:{
+      capnat:{low:46000,med:69000,high:105000,src:'IMT en ligne — CNP 11202, Québec (annualisé 2080 h) · pas de bande régionale distincte'},
+      qc:{low:46000,med:69000,high:105000,src:'IMT en ligne — CNP 11202, Québec (annualisé 2080 h)'},
+      ca:{low:46000,med:69000,high:105000,src:'IMT en ligne — CNP 11202, Québec (annualisé 2080 h) · référence provinciale'}
+    }
+  };
+
+  function money(v){return nf.format(Math.round(v/1000)*1000)+' $';}
+
+  function compute(){
+    var b=bands[state.poste][state.region];
+    var low=b.low,med=b.med,high=b.high;
+    var f=[];
+    f.push({t:'Cadre : '+b.src,q:true});
+    if(state.secteur==='b2b'){low*=1.20;med*=1.20;high*=1.20;f.push({t:'Secteur B2B tech / SaaS · +20 % (fourchette 15–25 %)'});}
+    if(state.spec==='dg'){low+=10000;med+=15000;high+=20000;f.push({t:'Demand gen / PMM / Growth · +10 000 à 20 000 $'});}
+    if(state.ia==='yes'){f.push({t:'Compétences IA / analytics · prime confirmée (85 % des leaders), montant non chiffré',q:true});}
+    if(state.langue==='en'){f.push({t:'Bilinguisme FR/EN · prime documentée, montant non chiffré',q:true});}
+    if(state.langue==='es'){f.push({t:'Trilinguisme FR/EN/ES · prime + valeur GTM Amérique latine, montant non chiffré',q:true});}
+
+    document.getElementById('med').innerHTML=money(med).replace('$','<span>$</span>');
+    document.getElementById('range').textContent='fourchette '+money(low)+' – '+money(high)+' / an';
+    document.getElementById('src').innerHTML='<b>Source de la bande de base :</b> '+b.src+'.';
+    document.getElementById('srcNote').textContent=state.poste==='pro'?'(donnée provinciale)':'';
+
+    var html='';
+    f.forEach(function(x){
+      html+='<div style="display:flex;gap:10px;align-items:baseline;margin-bottom:9px;font-size:.84rem">'
+        +'<span class="badge '+(x.q?'blue':'hot')+'">'+(x.q?'note':'appliqué')+'</span>'
+        +'<span style="color:var(--dim)">'+x.t+'</span></div>';
+    });
+    document.getElementById('factors').innerHTML='<div style="font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:12px">Facteurs</div>'+html;
+  }
+
+  document.querySelectorAll('.seg').forEach(function(seg){
+    var group=seg.dataset.group;
+    seg.querySelectorAll('button').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        seg.querySelectorAll('button').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+        state[group]=btn.dataset.v;
+        compute();
+      });
+    });
+  });
+  compute();
+})();
+</script>
+</body>
+</html>

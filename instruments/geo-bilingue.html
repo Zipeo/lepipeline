@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEO bilingue — êtes-vous cité par l'IA en français ? — Le Pipeline</title>
+<link rel="canonical" href="https://lepipeline.ca/instruments/geo-bilingue.html">
+<meta name="description" content="Votre entreprise est-elle citée par les modèles d'IA quand on demande en français comme en anglais ? Mesurez votre écart de citation bilingue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lp.css">
+</head>
+<body>
+<script>document.body.dataset.theme=(function(){try{var s=localStorage.getItem('lp-theme');if(s)return s;}catch(e){}var h=new Date().getHours();return(h>=7&&h<19)?'light':'dark';})();</script>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="topbar">
+  <div class="brand"><a href="/">Le Pipeline<span style="color:var(--hot)">.</span></a></div>
+  <nav>
+    <a href="/articles.html">Articles</a>
+    <a href="/enquetes.html">Enquêtes</a>
+    <a href="/instruments.html" class="active">Instruments</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+<button class="theme-btn theme-float" title="Jour / Nuit">☀</button>
+
+<div class="page-head">
+  <div class="breadcrumb"><a href="/instruments.html">Instruments</a> · GEO bilingue</div>
+  <div class="sec-label">Instrument · GEO</div>
+  <h1 class="page-title">Êtes-vous cité par l'IA… en français&nbsp;?</h1>
+  <p class="page-intro"><b>Beaucoup de marques canadiennes apparaissent en anglais et disparaissent en français.</b> On appelle ça l'écart de citation bilingue. Entrez votre entreprise&nbsp;; on pose la même question d'acheteur aux modèles, dans les deux langues.</p>
+</div>
+
+<section>
+  <div class="two-col">
+    <div class="reveal">
+      <div class="field"><label>Entreprise</label><input type="text" id="co" placeholder="Nom de votre entreprise"></div>
+      <div class="field"><label>Secteur</label><input type="text" id="sec" placeholder="ex. logiciel B2B, usinage de précision"></div>
+      <div class="field"><label>Marché</label>
+        <div class="seg" data-group="ville"><button data-v="Grand Montréal" class="on">Grand Montréal</button><button data-v="Québec">Ville de Québec</button><button data-v="Canada">Canada</button></div>
+      </div>
+      <button class="btn btn-hot" id="run" style="margin-top:8px">Analyser l'écart bilingue</button>
+      <div class="note" id="mode" style="margin-top:20px"></div>
+    </div>
+
+    <div class="reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="result" style="padding:34px 20px"><div class="lbl">Question EN</div><div class="big" id="en" style="font-size:2.2rem">—</div><div class="sub" id="enSub">en attente</div></div>
+        <div class="result" style="padding:34px 20px"><div class="lbl">Question FR</div><div class="big" id="fr" style="font-size:2.2rem">—</div><div class="sub" id="frSub">en attente</div></div>
+      </div>
+      <div class="bars" style="margin-top:24px">
+        <div class="bar-row"><div class="top"><span>Écart de citation bilingue</span><b id="gapPct">—</b></div><div class="bar-track"><div class="bar-fill hot" id="gapFill"></div></div></div>
+      </div>
+      <div id="reco" style="margin-top:16px"></div>
+    </div>
+  </div>
+
+  <div class="subtitle">Comment ça marche</div>
+  <div class="method reveal">
+    <h3>Mesure réelle vs mode démo</h3>
+    <p>La <b>mesure réelle</b> interroge un modèle d'IA via une fonction serverless (<code>/api/geo-check</code>) et compare les citations FR/EN. Tant que la clé d'API n'est pas configurée, l'outil tourne en <b>mode démonstration</b> et produit un résultat illustratif à partir de votre saisie — clairement identifié comme tel.</p>
+    <ul>
+      <li>Modèle : Claude (Anthropic) — voir le gabarit <code>/api/geo-check.js</code>.</li>
+      <li>Variable d'environnement requise : <code>ANTHROPIC_API_KEY</code> dans Vercel.</li>
+      <li>Aucune donnée visiteur n'est stockée&nbsp;; l'appel est fait au moment de la demande.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script src="/assets/lp.js"></script>
+<script>
+(function(){
+  var USE_API=false;
+  var state={ville:'Grand Montréal'};
+  document.querySelectorAll('.seg[data-group=ville] button').forEach(function(b){
+    b.addEventListener('click',function(){
+      b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');state.ville=b.dataset.v;
+    });
+  });
+  document.getElementById('mode').innerHTML='<b>Mode démonstration.</b> Résultat illustratif — la mesure réelle s\'active en configurant la clé d\'API (voir plus bas).';
+
+  function hash(s){var h=0;for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return h;}
+
+  function demo(co,sec){
+    var h=hash((co||'x')+'|'+(sec||'y')+'|'+state.ville);
+    var en=55+h%45;                 // 55–99
+    var fr=Math.max(8,en-(20+h%40)); // écart 20–59
+    return {en:en,fr:fr};
+  }
+
+  function show(r){
+    document.getElementById('en').textContent=r.en+' %';
+    document.getElementById('fr').innerHTML='<span>'+r.fr+' %</span>';
+    document.getElementById('enSub').textContent='probabilité de citation';
+    document.getElementById('frSub').textContent='probabilité de citation';
+    var gap=Math.max(0,r.en-r.fr);
+    document.getElementById('gapPct').textContent='−'+gap+' %';
+    document.getElementById('gapFill').style.width=Math.min(100,gap*1.6)+'%';
+    var reco=document.getElementById('reco');
+    if(gap>=25){reco.innerHTML='<span class="badge hot">écart critique</span> <span style="color:var(--dim);font-size:.86rem">Vous perdez une part importante des acheteurs francophones qui commencent dans un LLM.</span>';}
+    else if(gap>=10){reco.innerHTML='<span class="badge blue">écart notable</span> <span style="color:var(--dim);font-size:.86rem">Renforcez vos contenus français citables (données, pages sources).</span>';}
+    else{reco.innerHTML='<span class="badge green">écart faible</span> <span style="color:var(--dim);font-size:.86rem">Bonne parité FR/EN — surveillez chaque trimestre.</span>';}
+  }
+
+  document.getElementById('run').addEventListener('click',function(){
+    var co=document.getElementById('co').value.trim();
+    var sec=document.getElementById('sec').value.trim();
+    if(!USE_API){show(demo(co,sec));return;}
+    var btn=this;btn.textContent='Analyse…';
+    fetch('/api/geo-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({entreprise:co,secteur:sec,marche:state.ville})})
+      .then(function(r){return r.json();}).then(function(d){show(d);btn.textContent='Analyser l\'écart bilingue';})
+      .catch(function(){show(demo(co,sec));btn.textContent='Analyser l\'écart bilingue';});
+  });
+})();
+</script>
+</body>
+</html>
