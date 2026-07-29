@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Pipeline — Marketing B2B, IA et croissance, depuis Québec</title>
+<link rel="canonical" href="https://lepipeline.ca/">
+<meta name="description" content="Le média indépendant du marketing B2B et de l'IA appliquée, écrit depuis Québec par Carlos Alarcón. Des chiffres vérifiables, zéro théorie recyclée.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Le Pipeline","url":"https://lepipeline.ca","description":"Marketing B2B, IA et croissance — depuis Québec","inLanguage":"fr-CA","author":{"@type":"Person","name":"Carlos Alarcón","jobTitle":"Leader marketing B2B","address":{"@type":"PostalAddress","addressLocality":"Québec","addressRegion":"QC","addressCountry":"CA"},"knowsLanguage":["fr","en","es"],"sameAs":["https://ca.linkedin.com/in/alarconmarketing"]}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ THÈMES ============ */
+  body[data-theme="dark"]{
+    --bg:#0B0B10; --bg-2:#12121A;
+    --fg:#F2EFE9; --dim:#8B8B95;
+    --fg-rgb:242,239,233;
+    --glass:rgba(11,11,16,.72);
+    --card:#12121A;
+    --lecture-bg:#F2EFE9;
+    --shadow:rgba(0,0,0,.5);
+  }
+  body[data-theme="light"]{
+    --bg:#F7F4EE; --bg-2:#EDE9DF;
+    --fg:#161612; --dim:#6d6d64;
+    --fg-rgb:22,22,18;
+    --glass:rgba(247,244,238,.78);
+    --card:#FFFFFF;
+    --lecture-bg:#FFFFFF;
+    --shadow:rgba(20,20,16,.16);
+  }
+  :root{
+    --blue:#4D7CFE; --hot:#FF4D2E;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;
+    transition:background .6s ease,color .6s ease}
+  ::selection{background:var(--hot);color:#fff}
+
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--hot);pointer-events:none;z-index:100;
+    transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:difference}
+  .cursor.big{width:64px;height:64px;background:#fff}
+  @media(hover:none){.cursor{display:none}}
+
+  /* ---------- topbar ---------- */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:14px 34px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid rgba(var(--fg-rgb),.1);
+    transform:translateY(-100%);transition:transform .45s cubic-bezier(.6,0,.2,1),background .6s}
+  .topbar.visible{transform:translateY(0)}
+  .topbar .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem}
+  .topbar nav{display:flex;gap:26px;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+  .topbar nav a{color:var(--dim);text-decoration:none;transition:color .2s}
+  .topbar nav a:hover{color:var(--fg)}
+  .top-right{display:flex;align-items:center;gap:12px}
+  .lang{font-family:var(--mono);font-size:.72rem;border:1px solid rgba(var(--fg-rgb),.35);padding:4px 12px;border-radius:99px}
+  .lang b{color:var(--blue)}
+
+  /* bouton jour/nuit */
+  .theme-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(var(--fg-rgb),.35);background:transparent;color:var(--fg);
+    cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:transform .3s,border-color .2s}
+  .theme-btn:hover{transform:rotate(24deg);border-color:var(--fg)}
+  .theme-float{position:fixed;bottom:26px;right:26px;z-index:60;width:52px;height:52px;font-size:1.3rem;
+    background:var(--card);box-shadow:0 8px 30px var(--shadow)}
+  .theme-hint{position:fixed;bottom:34px;right:88px;z-index:60;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;
+    color:var(--dim);opacity:1;transition:opacity .6s;text-transform:uppercase}
+  .theme-hint.hide{opacity:0}
+
+  /* ---------- intro ---------- */
+  .intro{position:fixed;inset:0;background:var(--bg);z-index:90;display:flex;align-items:center;justify-content:center;
+    transition:clip-path .9s cubic-bezier(.85,0,.15,1) .5s;clip-path:inset(0 0 0 0)}
+  .intro.done{clip-path:inset(0 0 100% 0)}
+  .intro span{font-family:var(--mono);font-size:.8rem;letter-spacing:.3em;color:var(--dim);animation:pulse 1.2s infinite}
+  @keyframes pulse{50%{opacity:.3}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+  #particles{position:absolute;inset:0;width:100%;height:100%}
+  .hero-bottom{position:relative;z-index:2;padding:0 6vw 7vh;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+  .tagline{max-width:430px;font-size:clamp(.95rem,1.4vw,1.15rem);color:var(--dim)}
+  .tagline b{color:var(--fg)}
+  .byline{font-family:var(--mono);font-size:.75rem;color:var(--dim);margin-top:12px}
+  .byline span{color:var(--hot)}
+  .hero-cta{display:flex;gap:14px}
+  .btn{display:inline-block;padding:14px 28px;border-radius:99px;font-weight:600;font-size:.88rem;text-decoration:none;
+    transition:transform .2s,background .2s,color .2s;will-change:transform;border:none;cursor:pointer;font-family:'Inter'}
+  .btn-hot{background:var(--hot);color:#fff}
+  .btn-hot:hover{background:#ff6347}
+  .btn-line{border:1.5px solid rgba(var(--fg-rgb),.4);color:var(--fg);background:transparent}
+  .btn-line:hover{border-color:var(--fg)}
+  .hint{position:absolute;top:24px;right:34px;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--dim)}
+  .hero-kicker{position:absolute;top:24px;left:34px;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--dim)}
+  .hero-kicker i{color:var(--blue);font-style:normal}
+
+  /* ---------- ticker ---------- */
+  .ticker-wrap{border-top:1px solid rgba(var(--fg-rgb),.14);border-bottom:1px solid rgba(var(--fg-rgb),.14);overflow:hidden;padding:13px 0;background:var(--bg-2);transition:background .6s}
+  .ticker{display:flex;white-space:nowrap;animation:scrollx 44s linear infinite;width:max-content}
+  .ticker:hover{animation-play-state:paused}
+  .tick{font-family:var(--mono);font-size:.76rem;padding:0 36px;border-right:1px solid rgba(var(--fg-rgb),.14);color:var(--dim)}
+  .tick b{color:var(--blue)}
+  .tick i{color:var(--hot);font-style:normal}
+  @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- sections ---------- */
+  section{padding:110px 6vw}
+  .sec-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hot);margin-bottom:16px}
+  h2.sec-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,4.2vw,3.6rem);line-height:1.06;letter-spacing:-.015em;max-width:860px}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- scrollytelling ---------- */
+  .scrolly{position:relative;height:340vh}
+  .scrolly-sticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:4vw;padding:0 6vw;overflow:hidden}
+  @media(max-width:900px){.scrolly-sticky{grid-template-columns:1fr;align-items:end;padding-bottom:8vh}}
+  .steps{position:relative;height:280px}
+  .step{position:absolute;inset:0;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .5s;display:flex;flex-direction:column;justify-content:center}
+  .step.active{opacity:1;transform:none}
+  .step .num{font-family:var(--mono);font-size:.7rem;color:var(--hot);letter-spacing:.2em;margin-bottom:14px}
+  .step h3{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.4rem,2.4vw,2.1rem);line-height:1.15;margin-bottom:14px}
+  .step p{color:var(--dim);max-width:420px;font-size:.95rem}
+  .step p b{color:var(--fg)}
+  #scrollyCanvas{width:100%;height:76vh;display:block}
+  .scrolly-progress{position:absolute;left:6vw;bottom:5vh;display:flex;gap:8px}
+  .scrolly-progress i{width:34px;height:3px;background:rgba(var(--fg-rgb),.18);border-radius:99px;transition:background .3s}
+  .scrolly-progress i.on{background:var(--hot)}
+
+  /* ---------- mode lecture ---------- */
+  .lecture{background:var(--lecture-bg);color:#191914;border-radius:26px;margin:0 3vw;padding:110px 6vw;
+    transition:background .6s;box-shadow:0 20px 60px var(--shadow)}
+  .lecture .sec-label{color:#C93A20}
+  .lecture h2.sec-title{color:#141410}
+  .lecture-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:6vw;margin-top:60px;align-items:start}
+  @media(max-width:960px){.lecture-grid{grid-template-columns:1fr}}
+  .lecture-points p{color:#55554d;margin-bottom:18px;font-size:.97rem}
+  .lecture-points p b{color:#141410}
+  .kpi-line{display:flex;gap:34px;margin-top:34px;flex-wrap:wrap}
+  .kpi .n{font-family:'Fraunces',serif;font-weight:900;font-size:2.2rem;color:#141410}
+  .kpi .n span{color:var(--hot)}
+  .kpi .l{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:#84847a}
+  .article-demo{background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(20,20,16,.18);padding:56px 58px;transform:rotate(.4deg);transition:transform .4s;border:1px solid #eae6dc}
+  .article-demo:hover{transform:rotate(0) translateY(-4px)}
+  .article-demo .meta{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#C93A20;margin-bottom:18px;display:flex;gap:16px}
+  .article-demo h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.75rem;line-height:1.2;color:#141410;margin-bottom:22px}
+  .article-demo .lead{font-size:1.06rem;line-height:1.85;color:#33332d}
+  .article-demo .lead::first-letter{font-family:'Fraunces',serif;font-weight:900;font-size:3.6em;float:left;line-height:.82;margin:6px 12px 0 0;color:var(--hot)}
+  .pull{border-left:3px solid var(--hot);margin:26px 0;padding:6px 0 6px 22px;font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;line-height:1.4;color:#141410}
+  .inline-chart{margin-top:26px;background:#F6F3EC;border-radius:12px;padding:18px 20px}
+  .inline-chart .t{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:#84847a;margin-bottom:12px}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;font-size:.78rem;color:#33332d}
+  .bar-row .bl{width:110px;font-family:var(--mono);font-size:.68rem}
+  .bar-row .bar{height:10px;border-radius:99px;background:var(--blue);transform-origin:left;transform:scaleX(0);transition:transform 1s cubic-bezier(.2,.6,.2,1)}
+  .bar-row .bar.hot{background:var(--hot)}
+  .in .bar{transform:scaleX(1)}
+
+  /* ---------- articles ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--card);border:1px solid rgba(var(--fg-rgb),.1);border-radius:18px;padding:30px;
+    text-decoration:none;color:var(--fg);overflow:hidden;transition:transform .3s cubic-bezier(.2,.6,.2,1),border-color .3s,background .6s;display:flex;flex-direction:column;min-height:320px}
+  .card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at var(--mx,50%) var(--my,0%),rgba(77,124,254,.14),transparent 60%);opacity:0;transition:opacity .3s}
+  .card:hover{transform:translateY(-8px);border-color:rgba(77,124,254,.45)}
+  .card:hover::before{opacity:1}
+  .card-meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;display:flex;gap:14px}
+  .card h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;line-height:1.22;margin-bottom:12px}
+  .card p{font-size:.88rem;color:var(--dim);flex:1}
+  .card-metric{margin-top:20px;font-family:var(--mono);font-size:.72rem;border-top:1px dashed rgba(var(--fg-rgb),.22);padding-top:14px;color:var(--dim)}
+  .card-metric b{color:var(--hot)}
+  .card .arrow{position:absolute;top:26px;right:26px;font-size:1.2rem;color:var(--dim);transition:transform .3s,color .3s}
+  .card:hover .arrow{transform:translate(4px,-4px);color:var(--fg)}
+
+  /* ---------- calculateur ---------- */
+  .calc-sec{background:var(--bg-2);border-radius:26px;margin:0 3vw;transition:background .6s}
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:6vw;margin-top:54px;align-items:center}
+  @media(max-width:900px){.calc{grid-template-columns:1fr}}
+  .slider-group{margin-bottom:32px}
+  .slider-group label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.76rem;margin-bottom:12px;color:var(--dim)}
+  .slider-group label b{color:var(--fg);font-size:.95rem}
+  input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(var(--fg-rgb),.22);border-radius:99px;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--hot);cursor:pointer;border:3px solid var(--bg);transition:transform .15s}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25)}
+  .calc-result{text-align:center;border:1px dashed rgba(var(--fg-rgb),.3);border-radius:22px;padding:54px 30px;position:relative;overflow:hidden}
+  .calc-result::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 50% 120%,rgba(255,77,46,.14),transparent)}
+  .calc-result .lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  .calc-result .big{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.8rem,6vw,5rem);margin:12px 0 6px;letter-spacing:-.02em}
+  .calc-result .big span{color:var(--hot)}
+  .calc-result .sub{font-family:var(--mono);font-size:.75rem;color:var(--blue)}
+
+  /* ---------- à propos / infolettre / footer ---------- */
+  .about{max-width:900px}
+  .about p{color:var(--dim);font-size:1.05rem;max-width:640px}
+  .about p b{color:var(--fg)}
+  .creds{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--mono);font-size:.68rem;border:1px solid rgba(var(--fg-rgb),.3);border-radius:99px;padding:6px 14px;color:var(--dim)}
+  .chip.blue{border-color:var(--blue);color:var(--blue)}
+  .news{border-top:1px solid rgba(var(--fg-rgb),.12);text-align:center;padding:90px 6vw}
+  .news h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.7rem,3.2vw,2.6rem);margin-bottom:12px}
+  .news p{color:var(--dim);margin-bottom:30px}
+  .news form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .news input[type=email]{padding:14px 22px;border-radius:99px;border:1px solid rgba(var(--fg-rgb),.35);background:var(--card);color:var(--fg);font-size:.9rem;min-width:290px;font-family:'Inter'}
+  .news input[type=email]:focus{outline:2px solid var(--blue)}
+  footer{border-top:1px solid rgba(var(--fg-rgb),.12);padding:44px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:.8rem;color:var(--dim)}
+  footer .fbrand{font-family:'Fraunces',serif;font-weight:900;color:var(--fg);font-size:1rem}
+  footer a{color:var(--blue);text-decoration:none;margin-left:22px}
+  footer .mono{font-family:var(--mono);font-size:.66rem}
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="cursor" id="cursor"></div>
+<div class="intro" id="intro"><span>LE PIPELINE — CHARGEMENT</span></div>
+
+<div class="topbar" id="topbar">
+  <div class="brand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+  <nav>
+    <a href="#story">Le récit</a>
+    <a href="#articles">Articles</a>
+    <a href="#calc">Calculateur</a>
+    <a href="/a-propos.html">À propos</a>
+  </nav>
+  <div class="top-right">
+    <button class="theme-btn" id="themeBtnTop" title="Jour / Nuit">☀</button>
+    <div class="lang"><b>FR</b> / EN</div>
+  </div>
+</div>
+
+<!-- bouton flottant jour/nuit -->
+<button class="theme-btn theme-float" id="themeBtn" title="Jour / Nuit">☀</button>
+<div class="theme-hint" id="themeHint">mode auto · selon l'heure</div>
+
+<!-- HERO -->
+<header class="hero" id="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-kicker">MARKETING B2B · IA · DONNÉES — <i>QUÉBEC</i></div>
+  <div class="hint">BOUGEZ LA SOURIS ✦</div>
+  <div class="hero-bottom">
+    <div>
+      <p class="tagline"><b>Des cas réels. Des chiffres vérifiables. Zéro théorie recyclée.</b> Le média indépendant du marketing B2B et de l'IA appliquée, écrit depuis Québec.</p>
+      <div class="byline">par <span>Carlos Alarcón</span> — 15+ ans en croissance B2B · FR / EN / ES</div>
+    </div>
+    <div class="hero-cta">
+      <a href="#story" class="btn btn-hot magnetic">Voir le récit de données ↓</a>
+      <a href="#articles" class="btn btn-line magnetic">Articles</a>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <span class="tick">CHÔMAGE RMR QUÉBEC <b>3,0 %</b> · JAN 2026</span>
+    <span class="tick">AUTOMATISATION DU MARKETING <b>16 % → 36 %</b> D'ICI 2028 <i>(GARTNER)</i></span>
+    <span class="tick"><b>44 %</b> DES ACHETEURS COMMENCENT DANS UN LLM <i>(BAIN)</i></span>
+    <span class="tick">ACHETEURS B2B «REP-FREE» <b>67 %</b> <i>(GARTNER 2026)</i></span>
+    <span class="tick">BUDGETS MARKETING <b>7,8 %</b> DU REVENU <i>(CMO SPEND SURVEY)</i></span>
+    <span class="tick">LEADERS IA : CROISSANCE <b>6×</b> SUPÉRIEURE <i>(BAIN)</i></span>
+  </div>
+</div>
+
+<!-- SCROLLYTELLING -->
+<section style="padding-bottom:0" id="story">
+  <div class="reveal">
+    <div class="sec-label">Récit de données — défilez</div>
+    <h2 class="sec-title">Trois chiffres qui redéfinissent le marketing B2B en 2026.</h2>
+  </div>
+</section>
+<div class="scrolly" id="scrolly">
+  <div class="scrolly-sticky">
+    <div class="steps">
+      <div class="step" data-i="0">
+        <div class="num">01 / 03 — LE PARADOXE LOCAL</div>
+        <h3>Québec est en plein emploi. Et pourtant.</h3>
+        <p><b>3,0 % de chômage</b> — le plus bas des grandes villes canadiennes. Mais les perspectives pour les <b>directeurs marketing</b> sont officiellement « très limitées ». Le marché n'a pas disparu&nbsp;: il a changé de forme.</p>
+      </div>
+      <div class="step" data-i="1">
+        <div class="num">02 / 03 — LA VAGUE</div>
+        <h3>L'IA avale l'exécution.</h3>
+        <p>Les leaders marketing prévoient que l'automatisation passera de <b>16 % à 36 %</b> du travail d'ici 2028. Ce qui reste — et prend de la valeur — c'est <b>l'orchestration, la stratégie, le jugement</b>.</p>
+      </div>
+      <div class="step" data-i="2">
+        <div class="num">03 / 03 — LE NOUVEAU DÉPART</div>
+        <h3>Vos acheteurs commencent dans un LLM.</h3>
+        <p><b>44 %</b> des parcours d'achat démarrent désormais dans une IA générative. Si votre marque n'est pas citable, elle n'existe pas dans la conversation. C'est tout l'objet de ce média.</p>
+      </div>
+    </div>
+    <canvas id="scrollyCanvas"></canvas>
+    <div class="scrolly-progress"><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<!-- MODE LECTURE -->
+<section class="lecture" id="lecture">
+  <div class="reveal">
+    <div class="sec-label">Conçu pour la lecture</div>
+    <h2 class="sec-title">Spectaculaire dehors. Limpide dedans.</h2>
+  </div>
+  <div class="lecture-grid">
+    <div class="lecture-points reveal">
+      <p><b>Les effets attirent. La typographie retient.</b> Chaque article s'ouvre en pleine page blanche : colonne de 68 caractères, corps généreux, interlignage d'imprimé.</p>
+      <p>Les visualisations vivent <b>dans le texte</b>, jamais à côté : un graphique apparaît exactement au moment où la phrase en a besoin, comme dans un récit du Pudding.</p>
+      <p>Et chaque cas se termine par sa <b>fiche technique</b> — stack, durée, métriques, ce qui a échoué — parce qu'un lecteur B2B veut pouvoir vérifier.</p>
+      <div class="kpi-line">
+        <div class="kpi"><div class="n">9<span> min</span></div><div class="l">lecture moyenne</div></div>
+        <div class="kpi"><div class="n">68<span> ch</span></div><div class="l">largeur de colonne</div></div>
+        <div class="kpi"><div class="n">100<span> %</span></div><div class="l">chiffres sourcés</div></div>
+      </div>
+    </div>
+    <article class="article-demo reveal" id="articleDemo">
+      <div class="meta"><span>IA appliquée</span><span>·</span><span>6 min</span><span>·</span><span>Analyse</span></div>
+      <h3>965 milliards de dollars. Et rien à vendre que votre équipe marketing utilise... pour l'instant.</h3>
+      <p class="lead">965 milliards. C'est Anthropic, la licorne la plus chère du monde. Juste derrière... OpenAI, 852 milliards. Ce qui m'a arrêté, ce n'est pas la taille des chiffres. C'est ce que ces deux-là vendent.</p>
+      <div class="pull">« Le capital-risque a déjà voté. »</div>
+      <div class="inline-chart">
+        <div class="t">Trois chiffres du classement</div>
+        <div class="bar-row"><span class="bl">IA / TOP 30</span><div class="bar hot" style="width:60%"></div><span>~60 %</span></div>
+        <div class="bar-row"><span class="bl">PARCOURS LLM</span><div class="bar" style="width:44%"></div><span>44 %</span></div>
+        <div class="bar-row"><span class="bl">AUTOM. 2028</span><div class="bar" style="width:36%"></div><span>36 %</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="reveal">
+    <div class="sec-label">Derniers articles</div>
+    <h2 class="sec-title">Des cas vécus, avec les chiffres qui vont avec.</h2>
+  </div>
+  <div class="grid">
+    <a class="card reveal" href="/articles/965-milliards.html">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>IA APPLIQUÉE</span><span>6 MIN</span></div>
+      <h4>965 milliards de dollars. Et rien à vendre que votre équipe marketing utilise... pour l'instant.</h4>
+      <p>Lecture du classement des licornes avec les yeux d'un marketeur B2B — bulles interactives incluses.</p>
+      <div class="card-metric">DONNÉE CLÉ : l'IA pèse <b>~60 %</b> de la valeur du top 30</div>
+    </a>
+    <a class="card reveal" href="#">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>INSTRUMENT</span><span>À VENIR</span></div>
+      <h4>Vos prochains clients vous cherchent dans ChatGPT. Votre site est-il citable&nbsp;?</h4>
+      <p>Le test GEO en 10 questions pour les PME québécoises : devenir la source que les modèles d'IA citent.</p>
+      <div class="card-metric">DONNÉE CLÉ : <b>89 %</b> des réponses citent des tiers (Bain)</div>
+    </a>
+    <a class="card reveal" href="#">
+      <span class="arrow">↗</span>
+      <div class="card-meta"><span>ENQUÊTE</span><span>À VENIR</span></div>
+      <h4>Le marché du marketing B2B à Québec, raconté par les données.</h4>
+      <p>Plein emploi... et perspectives « très limitées ». Un récit défilant croisant 14 sources primaires.</p>
+      <div class="card-metric">DONNÉE CLÉ : chômage RMR Québec <b>3,0 %</b> · jan. 2026</div>
+    </a>
+  </div>
+</section>
+
+<!-- CALCULATEUR -->
+<section id="calc" class="calc-sec">
+  <div class="reveal">
+    <div class="sec-label">Instrument nº 1</div>
+    <h2 class="sec-title">Le calculateur de pipeline.</h2>
+  </div>
+  <div class="calc">
+    <div class="reveal">
+      <div class="slider-group">
+        <label>Leads qualifiés / mois <b id="vLeads">80</b></label>
+        <input type="range" id="sLeads" min="10" max="500" value="80">
+      </div>
+      <div class="slider-group">
+        <label>Taux de conversion en opportunités <b id="vConv">18 %</b></label>
+        <input type="range" id="sConv" min="2" max="50" value="18">
+      </div>
+      <div class="slider-group">
+        <label>Valeur moyenne d'une entente <b id="vDeal">25 000 $</b></label>
+        <input type="range" id="sDeal" min="2000" max="200000" step="1000" value="25000">
+      </div>
+      <div class="slider-group">
+        <label>Taux de closing <b id="vClose">22 %</b></label>
+        <input type="range" id="sClose" min="5" max="60" value="22">
+      </div>
+    </div>
+    <div class="calc-result reveal">
+      <div class="lbl">Pipeline annuel projeté</div>
+      <div class="big" id="bigResult">4,3 M$</div>
+      <div class="sub" id="subResult">≈ 950 K$ en revenus signés / an</div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="apropos">
+  <div class="about reveal">
+    <div class="sec-label">À propos</div>
+    <h2 class="sec-title" style="margin-bottom:22px">Carlos Alarcón</h2>
+    <p><b>Leader marketing B2B établi à Québec.</b> 15+ ans à transformer données, IA et discipline budgétaire en pipeline mesurable — de la scale-up industrielle au SaaS, du Canada à l'Amérique latine. Ici, j'écris ce que je fais. Avec les chiffres réels.</p>
+    <div class="creds">
+      <span class="chip blue">+38 % MQL</span>
+      <span class="chip blue">ROI 7:1</span>
+      <span class="chip blue">+28 % ROI budget</span>
+      <span class="chip">FR · EN · ES</span>
+      <span class="chip">LinkedIn ↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- INFOLETTRE -->
+<div class="news">
+  <h2>Une fois par mois. Que du signal.</h2>
+  <p>Les cas, les données et les instruments du Pipeline, directement dans votre boîte courriel.</p>
+  <form onsubmit="event.preventDefault();this.querySelector('button').textContent='Merci ✓'">
+    <input type="email" placeholder="votre@courriel.com" required>
+    <button class="btn btn-hot magnetic" type="submit">S'abonner</button>
+  </form>
+</div>
+
+<footer>
+  <div>
+    <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+    <div class="mono" style="margin-top:8px">Marketing B2B, IA et croissance — depuis Québec.</div>
+  </div>
+  <div>
+    <a href="#">LinkedIn</a><a href="#">RSS</a><a href="#">EN</a>
+    <div class="mono" style="margin-top:10px;text-align:right">© 2026 Carlos Alarcón · lepipeline.ca</div>
+  </div>
+</footer>
+
+<script>
+/* ================= THÈME JOUR / NUIT ================= */
+const PAL = {};
+function applyPalette(){
+  const dark = document.body.dataset.theme === 'dark';
+  PAL.dark  = dark;
+  PAL.fg    = dark ? '#F2EFE9' : '#161612';
+  PAL.dim   = dark ? '#8B8B95' : '#6d6d64';
+  PAL.grid  = dark ? 'rgba(242,239,233,.12)' : 'rgba(22,22,18,.12)';
+  PAL.faint = dark ? 'rgba(242,239,233,.16)' : 'rgba(22,22,18,.16)';
+  PAL.blue  = dark ? '#4D7CFE' : '#2E5BFF';
+  PAL.hot   = '#FF4D2E';
+  /* voile de fond du hero : plus il est opaque, plus la traînée est courte */
+  PAL.trail = dark ? 'rgba(11,11,16,.30)' : 'rgba(247,244,238,.22)';
+  const icon = dark ? '☀' : '☾';
+  document.getElementById('themeBtn').textContent = icon;
+  document.getElementById('themeBtnTop').textContent = icon;
+}
+function setTheme(t, manual){
+  document.body.dataset.theme = t;
+  applyPalette();
+  if(manual){ document.getElementById('themeHint').classList.add('hide'); }
+}
+/* auto : jour (7h–19h) = blanc, nuit = noir */
+const h = new Date().getHours();
+setTheme(h >= 7 && h < 19 ? 'light' : 'dark', false);
+document.getElementById('themeBtn').addEventListener('click',()=>setTheme(document.body.dataset.theme==='dark'?'light':'dark',true));
+document.getElementById('themeBtnTop').addEventListener('click',()=>setTheme(document.body.dataset.theme==='dark'?'light':'dark',true));
+
+/* ================= INTRO ================= */
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('intro').classList.add('done'),300));
+
+/* ================= CURSEUR ================= */
+(function(){
+  const c = document.getElementById('cursor');
+  let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
+  addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY});
+  (function loop(){ cx+=(x-cx)*.22; cy+=(y-cy)*.22; c.style.left=cx+'px'; c.style.top=cy+'px'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,button,input,.card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>c.classList.add('big'));
+    el.addEventListener('mouseleave',()=>c.classList.remove('big'));
+  });
+})();
+
+/* ================= HERO : TEXTE EN PARTICULES ================= */
+(function(){
+  const cv = document.getElementById('particles');
+  const ctx = cv.getContext('2d');
+  let W,H,parts=[],mouse={x:-9999,y:-9999};
+
+  function build(){
+    W = cv.width = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+    const off = document.createElement('canvas');
+    off.width = W; off.height = H;
+    const o = off.getContext('2d');
+    const fs = Math.min(W/5.4, H/2.6);
+    o.font = `900 ${fs}px Fraunces, serif`;
+    o.textAlign='center'; o.textBaseline='middle';
+    o.fillStyle='#fff';
+    o.fillText('PIPELINE', W/2, H*0.42);
+    o.font = `italic 300 ${fs*.34}px Fraunces, serif`;
+    o.fillText('le', W/2 - fs*2.62, H*0.42 - fs*.42);
+    const img = o.getImageData(0,0,W,H).data;
+    parts=[];
+    const gap = Math.max(3, Math.round(W/380)*2);
+    for(let y=0;y<H;y+=gap){
+      for(let x=0;x<W;x+=gap){
+        if(img[(y*W+x)*4+3] > 128){
+          parts.push({
+            hx:x, hy:y,
+            x: W/2 + (Math.random()-.5)*W*1.4,
+            y: H/2 + (Math.random()-.5)*H*1.4,
+            vx:0, vy:0,
+            r: Math.random()          // la couleur et la taille se résolvent à chaque image, selon le thème
+          });
+        }
+      }
+    }
+  }
+
+  cv.addEventListener('mousemove',e=>{const b=cv.getBoundingClientRect();mouse.x=e.clientX-b.left;mouse.y=e.clientY-b.top;});
+  cv.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+  addEventListener('touchmove',e=>{const b=cv.getBoundingClientRect();mouse.x=e.touches[0].clientX-b.left;mouse.y=e.touches[0].clientY-b.top;},{passive:true});
+
+  function loop(){
+    /* voile translucide au lieu d'un effacement net → traînée d'encre fraîche */
+    ctx.fillStyle = PAL.trail;
+    ctx.fillRect(0,0,W,H);
+    const R = Math.min(W,H)*.14, R2=R*R;
+    /* en mode clair : plus d'encre de couleur et des points plus gros */
+    const tHot  = PAL.dark ? .965 : .90;
+    const tBlue = PAL.dark ? .90  : .74;
+    const sAcc  = PAL.dark ? 2.2  : 2.8;
+    const sBase = PAL.dark ? 1.5  : 2.0;
+    for(const p of parts){
+      p.vx += (p.hx-p.x)*.045; p.vy += (p.hy-p.y)*.045;
+      const dx=p.x-mouse.x, dy=p.y-mouse.y, d2=dx*dx+dy*dy;
+      if(d2<R2){ const d=Math.sqrt(d2)||1, f=(R-d)/R*3.2; p.vx+=dx/d*f; p.vy+=dy/d*f; }
+      p.vx*=.86; p.vy*=.86;
+      p.x+=p.vx; p.y+=p.vy;
+      const accent = p.r>tHot ? PAL.hot : p.r>tBlue ? PAL.blue : null;
+      ctx.fillStyle = accent || PAL.fg;
+      const s = accent ? sAcc : sBase;
+      ctx.fillRect(p.x,p.y,s,s);
+    }
+    requestAnimationFrame(loop);
+  }
+  build(); loop();
+  let t; addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(build,250)});
+  if(document.fonts) document.fonts.ready.then(build);
+})();
+
+/* ================= SCROLLYTELLING ================= */
+(function(){
+  const wrap = document.getElementById('scrolly');
+  const cv = document.getElementById('scrollyCanvas');
+  const ctx = cv.getContext('2d');
+  const steps = [...document.querySelectorAll('.step')];
+  const dots = [...document.querySelectorAll('.scrolly-progress i')];
+  let W,H;
+  function resize(){ W=cv.width=cv.offsetWidth*devicePixelRatio; H=cv.height=cv.offsetHeight*devicePixelRatio; }
+  resize(); addEventListener('resize',resize);
+
+  const ease = t => 1-Math.pow(1-Math.min(Math.max(t,0),1),3);
+  const M = devicePixelRatio;
+
+  function draw(){
+    const r = wrap.getBoundingClientRect();
+    const total = r.height - innerHeight;
+    const p = Math.min(Math.max(-r.top/total,0),1);
+    const seg = Math.min(Math.floor(p*3),2);
+    const f = ease((p*3)-seg);
+    steps.forEach((s,i)=>s.classList.toggle('active',i===seg));
+    dots.forEach((d,i)=>d.classList.toggle('on',i<=seg));
+
+    ctx.clearRect(0,0,W,H);
+    ctx.textBaseline='alphabetic';
+
+    if(seg===0){
+      const cx=W/2, cy=H/2, rad=Math.min(W,H)*.3;
+      ctx.lineWidth=3*M; ctx.strokeStyle=PAL.grid;
+      ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2); ctx.stroke();
+      ctx.lineWidth=10*M; ctx.strokeStyle=PAL.blue; ctx.lineCap='round';
+      ctx.beginPath(); ctx.arc(cx,cy,rad,-Math.PI/2,-Math.PI/2+Math.PI*2*f*.83); ctx.stroke();
+      ctx.fillStyle=PAL.fg;
+      ctx.font=`900 ${rad*.55}px Fraunces,serif`; ctx.textAlign='center';
+      ctx.fillText((3*f).toLocaleString('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1})+' %',cx,cy+rad*.12);
+      ctx.font=`${12*M}px JetBrains Mono,monospace`; ctx.fillStyle=PAL.dim;
+      ctx.fillText('CHÔMAGE · RMR DE QUÉBEC · JANVIER 2026',cx,cy+rad*.55);
+      ctx.font=`${11*M}px JetBrains Mono,monospace`; ctx.fillStyle=PAL.hot;
+      if(f>.7) ctx.fillText('PERSPECTIVES DIRECTEURS MKT : « TRÈS LIMITÉES »',cx,cy+rad*.75);
+    }
+    else if(seg===1){
+      const data=[16,17,19,22,25,28,31,36];
+      const x0=W*.12,x1=W*.92,y0=H*.8,y1=H*.2;
+      ctx.strokeStyle=PAL.grid;ctx.lineWidth=1*M;
+      for(let i=0;i<5;i++){const y=y0-(y0-y1)*i/4;ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(x1,y);ctx.stroke();}
+      ctx.beginPath();
+      const n=data.length;
+      for(let i=0;i<n;i++){
+        const x=x0+(x1-x0)*(i/(n-1))*f;
+        const y=y0-(data[i]-14)/24*(y0-y1);
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=PAL.hot; ctx.lineWidth=4*M; ctx.lineCap='round'; ctx.stroke();
+      const lx=x0+(x1-x0)*f, lv=Math.round(16+20*f);
+      ctx.fillStyle=PAL.hot; ctx.beginPath(); ctx.arc(lx, y0-(lv-14)/24*(y0-y1), 7*M,0,7); ctx.fill();
+      ctx.fillStyle=PAL.fg; ctx.font=`900 ${34*M}px Fraunces,serif`; ctx.textAlign='left';
+      ctx.fillText(lv+' %', Math.min(lx+16*M,W-90*M), y0-(lv-14)/24*(y0-y1)-14*M);
+      ctx.font=`${12*M}px JetBrains Mono,monospace`; ctx.fillStyle=PAL.dim; ctx.textAlign='center';
+      ctx.fillText('PART DU TRAVAIL MARKETING AUTOMATISÉE PAR L’IA · 2026 → 2028 (GARTNER)',W/2,H*.92);
+    }
+    else{
+      const cx=W/2, bw=W*.3, y0=H*.75, maxH=H*.45;
+      const a=44*f, b=100-44*f;
+      ctx.fillStyle=PAL.faint;
+      ctx.fillRect(cx-bw-30*M, y0-maxH*(b/100), bw, maxH*(b/100));
+      const grad=ctx.createLinearGradient(0,y0-maxH,0,y0);
+      grad.addColorStop(0,PAL.hot); grad.addColorStop(1,PAL.blue);
+      ctx.fillStyle=grad;
+      ctx.fillRect(cx+30*M, y0-maxH*(a/100), bw, maxH*(a/100));
+      ctx.fillStyle=PAL.fg; ctx.textAlign='center';
+      ctx.font=`900 ${40*M}px Fraunces,serif`;
+      ctx.fillText(Math.round(a)+' %', cx+30*M+bw/2, y0-maxH*(a/100)-16*M);
+      ctx.font=`${11*M}px JetBrains Mono,monospace`; ctx.fillStyle=PAL.dim;
+      ctx.fillText('MOTEURS CLASSIQUES', cx-bw/2-30*M, y0+26*M);
+      ctx.fillText('PARCOURS DÉMARRANT DANS UN LLM (BAIN)', cx+30*M+bw/2, y0+26*M);
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ================= CALCULATEUR ================= */
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => n>=1e6 ? (n/1e6).toLocaleString('fr-CA',{maximumFractionDigits:1})+' M$'
+                          : Math.round(n/1000).toLocaleString('fr-CA')+' K$';
+  function update(){
+    const leads=+$('sLeads').value, conv=+$('sConv').value/100,
+          deal=+$('sDeal').value, close=+$('sClose').value/100;
+    $('vLeads').textContent=leads;
+    $('vConv').textContent=Math.round(conv*100)+' %';
+    $('vDeal').textContent=deal.toLocaleString('fr-CA')+' $';
+    $('vClose').textContent=Math.round(close*100)+' %';
+    const pipe=leads*12*conv*deal;
+    $('bigResult').innerHTML=fmt(pipe).replace('$','<span>$</span>');
+    $('subResult').textContent='≈ '+fmt(pipe*close)+' en revenus signés / an';
+  }
+  ['sLeads','sConv','sDeal','sClose'].forEach(id=>$(id).addEventListener('input',update));
+  update();
+})();
+
+/* ================= DIVERS ================= */
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+document.querySelectorAll('.reveal,.article-demo').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>document.getElementById('topbar').classList.toggle('visible',scrollY>innerHeight*.7));
+const tk=document.getElementById('ticker'); tk.innerHTML+=tk.innerHTML;
+document.querySelectorAll('.magnetic').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect();
+    b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`;
+  });
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+});
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+</script>
+</body>
+</html>

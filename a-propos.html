@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>À propos — Le Pipeline, par Carlos Alarcón</title>
+<link rel="canonical" href="https://lepipeline.ca/a-propos.html">
+<meta name="description" content="Qui écrit Le Pipeline : Carlos Alarcón, leader marketing B2B établi à Québec. 15+ ans, FR/EN/ES, et une méthode : des chiffres sourcés, zéro théorie recyclée.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Carlos Alarcón","jobTitle":"Leader marketing B2B","description":"Leader marketing B2B établi à Québec. 15+ ans à transformer données, IA et discipline budgétaire en pipeline mesurable.","address":{"@type":"PostalAddress","addressLocality":"Québec","addressRegion":"QC","addressCountry":"CA"},"knowsLanguage":["fr","en","es"],"knowsAbout":["Marketing B2B","Génération de demande","Intelligence artificielle appliquée au marketing","Marketing operations","Go-to-Market international"],"sameAs":["https://ca.linkedin.com/in/alarconmarketing"],"url":"https://lepipeline.ca"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body[data-theme="dark"]{--bg:#0B0B10;--bg-2:#12121A;--fg:#F2EFE9;--dim:#9a9aa3;--fg-rgb:242,239,233;--glass:rgba(11,11,16,.75);--card:#12121A;--blue:#4D7CFE;}
+  body[data-theme="light"]{--bg:#F9F7F2;--bg-2:#EFEBE2;--fg:#1B1B16;--dim:#66665e;--fg-rgb:27,27,22;--glass:rgba(249,247,242,.8);--card:#FFFFFF;--blue:#2E5BFF;}
+  :root{--hot:#FF4D2E;--mono:'JetBrains Mono',ui-monospace,monospace;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;line-height:1.6;transition:background .6s,color .6s}
+  ::selection{background:var(--hot);color:#fff}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:13px 30px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid rgba(var(--fg-rgb),.1)}
+  .topbar a{text-decoration:none;color:var(--fg)}
+  .topbar .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1rem}
+  .topbar .back{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--dim)}
+  .theme-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(var(--fg-rgb),.35);background:transparent;color:var(--fg);cursor:pointer}
+  .wrap{max-width:720px;margin:0 auto;padding:150px 6vw 80px}
+  .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hot);margin-bottom:20px}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,4.5vw,3.2rem);line-height:1.1;margin-bottom:26px}
+  .wrap p{font-size:1.05rem;line-height:1.85;margin-bottom:24px;color:var(--fg)}
+  .wrap p.dim{color:var(--dim)}
+  mark{background:linear-gradient(transparent 55%, rgba(255,77,46,.28) 55%);color:inherit;padding:0 2px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 40px}
+  .chip{font-family:var(--mono);font-size:.7rem;border:1px solid rgba(var(--fg-rgb),.3);border-radius:99px;padding:6px 14px;color:var(--dim)}
+  .chip.blue{border-color:var(--blue);color:var(--blue)}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;margin:50px 0 20px}
+  h2 .no{font-family:var(--mono);font-size:.7rem;color:var(--hot);display:block;letter-spacing:.18em;margin-bottom:8px;font-weight:400}
+  .methode{border:1.5px solid var(--fg);border-radius:16px;padding:28px 30px;background:var(--card);margin:30px 0}
+  .methode .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed rgba(var(--fg-rgb),.2);font-size:.95rem;line-height:1.7}
+  .methode .row:last-child{border-bottom:none}
+  .methode .row b{color:var(--blue);font-family:var(--mono);font-size:.8rem;flex-shrink:0;padding-top:2px}
+  .cta{display:inline-block;margin-top:10px;padding:14px 28px;border-radius:99px;font-weight:600;background:var(--hot);color:#fff;text-decoration:none}
+  footer{border-top:1px solid rgba(var(--fg-rgb),.12);padding:40px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:.78rem;color:var(--dim)}
+  footer .fbrand{font-family:'Fraunces',serif;font-weight:900;color:var(--fg)}
+  footer a{color:var(--blue);text-decoration:none;margin-left:20px}
+</style>
+</head>
+<body data-theme="light">
+<div class="topbar">
+  <a class="back" href="/">← LE PIPELINE</a>
+  <a class="brand" href="/">Le Pipeline<span style="color:var(--hot)">.</span></a>
+  <button class="theme-btn" id="themeBtn">☾</button>
+</div>
+
+<div class="wrap">
+  <div class="kicker">À propos</div>
+  <h1>Le Pipeline, c'est un pari simple : le marketing B2B se raconte mieux avec des chiffres vérifiables.</h1>
+
+  <p>Je m'appelle <mark>Carlos Alarcón</mark>. Leader marketing B2B établi à Québec, 15+ ans à transformer données, IA et discipline budgétaire en pipeline mesurable — de la scale-up industrielle au SaaS, du Canada à l'Amérique latine, en trois langues.</p>
+
+  <p class="dim">Ce média est indépendant. Il ne parle pas au nom de mon employeur, ne vend rien, et n'utilise aucune donnée interne des entreprises où j'ai travaillé. Ce qui s'écrit ici sort de trois sources : des données publiques analysées en profondeur, des expériences menées sur Le Pipeline lui-même... et quinze ans de jugement formé sur le terrain.</p>
+
+  <div class="chips">
+    <span class="chip blue">Marketing B2B</span>
+    <span class="chip blue">IA appliquée</span>
+    <span class="chip blue">Génération de demande</span>
+    <span class="chip">FR · EN · ES</span>
+    <span class="chip">Québec, QC</span>
+  </div>
+
+  <h2><span class="no">// LA MÉTHODE</span>Comment Le Pipeline travaille</h2>
+
+  <div class="methode">
+    <div class="row"><b>01</b><span>Chaque chiffre a une source, citée dans l'article. Pas de projection maison présentée comme un fait, pas d'arrondi vers le haut.</span></div>
+    <div class="row"><b>02</b><span>L'IA participe à la production — c'est le sujet du média, il serait absurde de s'en priver. Mais chaque texte passe par un jugement éditorial humain : le mien. Ce qui est publié, je peux le défendre en personne.</span></div>
+    <div class="row"><b>03</b><span>Aucune donnée interne d'employeurs, passés ou présents. Les analyses s'appuient sur des sources publiques et des expériences propres, reproductibles par le lecteur.</span></div>
+    <div class="row"><b>04</b><span>Quand je ne sais pas, c'est écrit. L'incertitude assumée fait partie de la méthode.</span></div>
+  </div>
+
+  <h2><span class="no">// CONTACT</span>Discutons</h2>
+  <p class="dim">Le meilleur canal, c'est LinkedIn — j'y réponds personnellement.</p>
+  <a class="cta" href="https://ca.linkedin.com/in/alarconmarketing">Écrivez-moi sur LinkedIn →</a>
+</div>
+
+<footer>
+  <div class="fbrand">Le Pipeline<span style="color:var(--hot)">.</span></div>
+  <div>
+    <a href="/">Accueil</a><a href="https://ca.linkedin.com/in/alarconmarketing">LinkedIn</a>
+    <span style="margin-left:20px;font-family:var(--mono);font-size:.66rem">© 2026 Carlos Alarcón · lepipeline.ca</span>
+  </div>
+</footer>
+
+<script>
+function setTheme(t){document.body.dataset.theme=t;document.getElementById('themeBtn').textContent=t==='dark'?'☀':'☾';}
+const h=new Date().getHours(); setTheme(h>=7&&h<19?'light':'dark');
+document.getElementById('themeBtn').addEventListener('click',()=>setTheme(document.body.dataset.theme==='dark'?'light':'dark'));
+</script>
+</body>
+</html>
