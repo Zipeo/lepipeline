@@ -84,7 +84,7 @@
 <script src="../assets/lp.js"></script>
 <script>
 (function(){
-  var USE_API=false;
+  var USE_API=true;
   var state={ville:'Grand Montréal'};
   document.querySelectorAll('.seg[data-group=ville] button').forEach(function(b){
     b.addEventListener('click',function(){
@@ -92,7 +92,10 @@
       b.classList.add('on');state.ville=b.dataset.v;
     });
   });
-  document.getElementById('mode').innerHTML='<b>Mode démonstration.</b> Résultat illustratif — la mesure réelle s\'active avec la clé d\'API (voir plus bas).';
+  function setMode(live){document.getElementById('mode').innerHTML=live
+    ?'<b>Résultat en direct.</b> Généré à partir d\'un modèle d\'IA.'
+    :'<b>Mode démonstration.</b> Résultat illustratif — la mesure réelle s\'active avec la clé d\'API (voir plus bas).';}
+  setMode(false);
 
   var pistesAll=[
     'Publier des pages « sources » : données chiffrées, méthodologie, dates.',
@@ -129,11 +132,17 @@
   document.getElementById('run').addEventListener('click',function(){
     var co=document.getElementById('co').value.trim();
     var sec=document.getElementById('sec').value.trim();
-    if(!USE_API){show(demo(co,sec));return;}
-    var btn=this;btn.textContent='Test…';
+    var btn=this;
+    if(!USE_API){setMode(false);show(demo(co,sec));return;}
+    btn.textContent='Test…';
     fetch('/api/geo-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'citable',entreprise:co,secteur:sec,marche:state.ville})})
-      .then(function(r){return r.json();}).then(function(d){show(d);btn.textContent='Tester ma citabilité';})
-      .catch(function(){show(demo(co,sec));btn.textContent='Tester ma citabilité';});
+      .then(function(r){return r.ok?r.json():Promise.reject();})
+      .then(function(d){
+        if(d&&typeof d.score==='number'&&Array.isArray(d.pistes)){setMode(true);show(d);}
+        else{setMode(false);show(demo(co,sec));}
+        btn.textContent='Tester ma citabilité';
+      })
+      .catch(function(){setMode(false);show(demo(co,sec));btn.textContent='Tester ma citabilité';});
   });
 })();
 </script>
