@@ -61,11 +61,11 @@
 
   <div class="subtitle">Comment ça marche</div>
   <div class="method reveal">
-    <h3>Mesure réelle vs mode démo</h3>
-    <p>La <b>mesure réelle</b> interroge un modèle d'IA (fonction serverless <code>/api/geo-check</code>) avec des questions d'acheteur pour votre secteur et votre marché, puis évalue si votre entreprise est citée et avec quelle source. Sans clé d'API, l'outil tourne en <b>mode démonstration</b> — résultat illustratif clairement identifié.</p>
+    <h3>À propos de ce résultat</h3>
+    <p>Le score est généré par un modèle d'intelligence artificielle, à partir des questions qu'un acheteur poserait pour votre secteur et votre marché. C'est une <b>estimation</b>, pas une mesure officielle — un point de départ, pas un verdict.</p>
     <ul>
-      <li>Modèle : DeepSeek (deepseek-chat) — gabarit <code>/api/geo-check.js</code>.</li>
-      <li>Variable requise : <code>DEEPSEEK_API_KEY</code> dans Vercel.</li>
+      <li>Aucune donnée saisie n'est conservée&nbsp;; l'analyse se fait au moment de la demande.</li>
+      <li>Si l'analyse en direct est indisponible, l'outil affiche un résultat illustratif, clairement identifié comme tel.</li>
     </ul>
   </div>
 </section>
