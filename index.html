@@ -218,10 +218,10 @@
 <div class="topbar" id="topbar">
   <div class="brand">Le Pipeline<span style="color:var(--hot)">.</span></div>
   <nav>
-    <a href="#story">Le récit</a>
-    <a href="#articles">Articles</a>
-    <a href="#calc">Calculateur</a>
-    <a href="/a-propos.html">À propos</a>
+    <a href="articles.html">Articles</a>
+    <a href="enquetes.html">Enquêtes</a>
+    <a href="instruments.html">Instruments</a>
+    <a href="a-propos.html">À propos</a>
   </nav>
   <div class="top-right">
     <button class="theme-btn" id="themeBtnTop" title="Jour / Nuit">☀</button>
@@ -332,7 +332,7 @@
     <h2 class="sec-title">Des cas vécus, avec les chiffres qui vont avec.</h2>
   </div>
   <div class="grid">
-    <a class="card reveal" href="/articles/965-milliards.html">
+    <a class="card reveal" href="articles/965-milliards.html">
       <span class="arrow">↗</span>
       <div class="card-meta"><span>IA APPLIQUÉE</span><span>6 MIN</span></div>
       <h4>965 milliards de dollars. Et rien à vendre que votre équipe marketing utilise... pour l'instant.</h4>
@@ -356,36 +356,13 @@
   </div>
 </section>
 
-<!-- CALCULATEUR -->
-<section id="calc" class="calc-sec">
+<!-- INSTRUMENTS (teaser) -->
+<section id="instruments" class="calc-sec">
   <div class="reveal">
-    <div class="sec-label">Instrument nº 1</div>
-    <h2 class="sec-title">Le calculateur de pipeline.</h2>
-  </div>
-  <div class="calc">
-    <div class="reveal">
-      <div class="slider-group">
-        <label>Leads qualifiés / mois <b id="vLeads">80</b></label>
-        <input type="range" id="sLeads" min="10" max="500" value="80">
-      </div>
-      <div class="slider-group">
-        <label>Taux de conversion en opportunités <b id="vConv">18 %</b></label>
-        <input type="range" id="sConv" min="2" max="50" value="18">
-      </div>
-      <div class="slider-group">
-        <label>Valeur moyenne d'une entente <b id="vDeal">25 000 $</b></label>
-        <input type="range" id="sDeal" min="2000" max="200000" step="1000" value="25000">
-      </div>
-      <div class="slider-group">
-        <label>Taux de closing <b id="vClose">22 %</b></label>
-        <input type="range" id="sClose" min="5" max="60" value="22">
-      </div>
-    </div>
-    <div class="calc-result reveal">
-      <div class="lbl">Pipeline annuel projeté</div>
-      <div class="big" id="bigResult">4,3 M$</div>
-      <div class="sub" id="subResult">≈ 950 K$ en revenus signés / an</div>
-    </div>
+    <div class="sec-label">Instruments</div>
+    <h2 class="sec-title">Des outils gratuits, ancrés dans des données publiques.</h2>
+    <p style="color:var(--dim);max-width:600px;margin-top:22px;font-size:1.05rem">Combien vaut un profil marketing B2B au Québec&nbsp;? Votre marketing est-il conforme à la Loi 96&nbsp;? Êtes-vous cité par l'IA&nbsp;? Des calculateurs et diagnostics transparents sur leur formule — jamais de théorie recyclée.</p>
+    <a href="instruments.html" class="btn btn-hot magnetic" style="margin-top:32px">Voir les instruments →</a>
   </div>
 </section>
 
@@ -618,26 +595,6 @@ window.addEventListener('load',()=>setTimeout(()=>document.getElementById('intro
     requestAnimationFrame(draw);
   }
   draw();
-})();
-
-/* ================= CALCULATEUR ================= */
-(function(){
-  const $ = id => document.getElementById(id);
-  const fmt = n => n>=1e6 ? (n/1e6).toLocaleString('fr-CA',{maximumFractionDigits:1})+' M$'
-                          : Math.round(n/1000).toLocaleString('fr-CA')+' K$';
-  function update(){
-    const leads=+$('sLeads').value, conv=+$('sConv').value/100,
-          deal=+$('sDeal').value, close=+$('sClose').value/100;
-    $('vLeads').textContent=leads;
-    $('vConv').textContent=Math.round(conv*100)+' %';
-    $('vDeal').textContent=deal.toLocaleString('fr-CA')+' $';
-    $('vClose').textContent=Math.round(close*100)+' %';
-    const pipe=leads*12*conv*deal;
-    $('bigResult').innerHTML=fmt(pipe).replace('$','<span>$</span>');
-    $('subResult').textContent='≈ '+fmt(pipe*close)+' en revenus signés / an';
-  }
-  ['sLeads','sConv','sDeal','sClose'].forEach(id=>$(id).addEventListener('input',update));
-  update();
 })();
 
 /* ================= DIVERS ================= */
